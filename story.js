@@ -1,7 +1,5 @@
-// Slideshow functionality
 let slideIndex = 0;
 const slides = document.querySelectorAll(".slides");
-const dots = document.querySelectorAll(".dot");
 const prevBtn = document.querySelector(".prev");
 const nextBtn = document.querySelector(".next");
 
@@ -12,9 +10,6 @@ function showSlide(index) {
 
   slides.forEach((slide, i) => {
     slide.style.display = i === slideIndex ? "block" : "none";
-    dots[i].classList.toggle("active", i === slideIndex);
-    dots[i].setAttribute("aria-selected", i === slideIndex ? "true" : "false");
-    dots[i].tabIndex = i === slideIndex ? 0 : -1;
   });
 }
 
@@ -36,20 +31,6 @@ nextBtn.addEventListener("click", () => {
   resetTimer();
 });
 
-dots.forEach((dot, i) => {
-  dot.addEventListener("click", () => {
-    showSlide(i);
-    resetTimer();
-  });
-  dot.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      showSlide(i);
-      resetTimer();
-    }
-  });
-});
-
 let slideTimer = setInterval(nextSlide, 5000);
 
 function resetTimer() {
@@ -57,11 +38,9 @@ function resetTimer() {
   slideTimer = setInterval(nextSlide, 5000);
 }
 
-// Initialize slideshow
-showSlide(slideIndex);
-
-// Dynamically set current year
+// Start slideshow once DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
+  showSlide(slideIndex);
   const yearSpan = document.getElementById("year");
   if (yearSpan) {
     yearSpan.textContent = new Date().getFullYear();
